@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Middlewares\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MassTransit.AspNetCore" Version="7.2.2" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="7.2.2" />
+	</ItemGroup>
+
+</Project>
