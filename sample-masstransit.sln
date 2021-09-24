@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Masstransit.WebApi", "src\Sample.Masstransit.WebApi\Sample.Masstransit.WebApi.csproj", "{D18E6806-877B-48DF-9850-1A8BDB0A7588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Masstransit.WebApi", "src\Sample.Masstransit.WebApi\Sample.Masstransit.WebApi.csproj", "{D18E6806-877B-48DF-9850-1A8BDB0A7588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Masstransit.WebApi.Core", "src\Sample.Masstransit.WebApi.Core\Sample.Masstransit.WebApi.Core.csproj", "{E3E3E41A-7BBA-45AB-B2A0-BBF182C503DF}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2CFD0259-0B15-4A0C-B97E-6BF8933CD0B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Masstransit.WebApi.Core", "src\Sample.Masstransit.WebApi.Core\Sample.Masstransit.WebApi.Core.csproj", "{E3E3E41A-7BBA-45AB-B2A0-BBF182C503DF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{D794829D-449B-4C8F-B3F9-0DE0F66C0BB0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Worker", "Worker", "{3B3CD41F-929A-4F88-AA75-4C973E7C6C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Masstransit.Worker", "src\Sample.Masstransit.Worker\Sample.Masstransit.Worker.csproj", "{D5193C0D-8629-48F7-9CC7-F0045B2A4845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Masstransit.Worker", "src\Sample.Masstransit.Worker\Sample.Masstransit.Worker.csproj", "{D5193C0D-8629-48F7-9CC7-F0045B2A4845}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,9 +27,6 @@ Global
 		{E3E3E41A-7BBA-45AB-B2A0-BBF182C503DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E3E41A-7BBA-45AB-B2A0-BBF182C503DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E3E41A-7BBA-45AB-B2A0-BBF182C503DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CFD0259-0B15-4A0C-B97E-6BF8933CD0B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CFD0259-0B15-4A0C-B97E-6BF8933CD0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CFD0259-0B15-4A0C-B97E-6BF8933CD0B4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5193C0D-8629-48F7-9CC7-F0045B2A4845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5193C0D-8629-48F7-9CC7-F0045B2A4845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5193C0D-8629-48F7-9CC7-F0045B2A4845}.Release|Any CPU.ActiveCfg = Release|Any CPU

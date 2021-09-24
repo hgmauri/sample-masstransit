@@ -2,7 +2,7 @@
 
 namespace Sample.Masstransit.WebApi.Core.Models
 {
-    public interface ClientModel
+    public class ClientModel
     {
         public string ClientId { get; set; }
         public string Name { get; set; }
