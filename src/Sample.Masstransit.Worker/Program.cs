@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using GreenPipes;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -28,8 +29,9 @@ var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
 {
     cfg.ReceiveEndpoint("queue-teste", e =>
     {
-        e.Consumer<WorkerClient>();
         e.PrefetchCount = 10;
+        e.UseMessageRetry(p => p.Interval(3, 100));
+        e.Consumer<WorkerClient>();
     });
 });
 var source = new CancellationTokenSource(TimeSpan.FromSeconds(10));
