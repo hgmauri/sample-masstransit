@@ -35,6 +35,6 @@ var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
 var source = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 await busControl.StartAsync(source.Token);
 
-Console.WriteLine("Waiting for messages...");
+Console.WriteLine("Waiting for new messages.");
 
 while (true);

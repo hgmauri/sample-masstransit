@@ -22,7 +22,7 @@ namespace Sample.Masstransit.WebApi.Controllers
         public async Task<IActionResult> Post([FromBody] ClientModel model)
         {
             await _publisher.Publish<ClientModel>(model);
-            _logger.LogInformation($"Send {nameof(ClientModel)}");
+            _logger.LogInformation($"Send client: {model.ClientId} - {model.Name}");
 
             return Ok();
         }

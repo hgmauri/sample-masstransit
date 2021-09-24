@@ -8,16 +8,12 @@ namespace Sample.Masstransit.Worker.Workers
 {
     public class WorkerClient : IConsumer<ClientModel>
     {
-        public WorkerClient()
-        {
-        }
-
         public Task Consume(ConsumeContext<ClientModel> context)
         {
             var id = context.Message.ClientId;
             var name = context.Message.Name;
 
-            Console.WriteLine($"New client: [{id}] - {name}");
+            Console.WriteLine($"Receive client: {id} - {name}");
             return Task.CompletedTask;
         }
     }

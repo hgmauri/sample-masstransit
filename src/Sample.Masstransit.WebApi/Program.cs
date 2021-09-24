@@ -1,8 +1,8 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using Sample.Masstransit.WebApi.Core.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +12,14 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "Sample.Masstransit.WebApi", Version = "v1" });
 });
 
-builder.Services.AddMassTransitExtension(builder.Configuration);
+builder.Services.AddMassTransit(bus =>
+{
+    bus.UsingRabbitMq((ctx, busConfigurator) =>
+    {
+        busConfigurator.Host(builder.Configuration.GetConnectionString("RabbitMq"));
+    });
+});
+builder.Services.AddMassTransitHostedService();
 
 var app = builder.Build();
 
