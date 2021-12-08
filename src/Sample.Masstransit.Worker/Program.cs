@@ -1,9 +1,5 @@
-using System;
-using System.Threading;
 using GreenPipes;
 using MassTransit;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Sample.Masstransit.WebApi.Core.Extensions;
 using Sample.Masstransit.Worker.Workers;
 
