@@ -1,6 +1,7 @@
 using Sample.Masstransit.WebApi.Core.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>

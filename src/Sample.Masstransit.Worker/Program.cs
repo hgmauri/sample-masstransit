@@ -1,26 +1,30 @@
-using System.Reflection;
-using GreenPipes;
 using MassTransit;
 using MassTransit.Definition;
-using Sample.Masstransit.WebApi.Core;
+using Sample.Masstransit.WebApi.Core.Events;
+using Sample.Masstransit.Worker.Workers;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, collection) =>
     {
-        collection.AddMassTransit(bus =>
+        collection.AddMassTransit(x =>
         {
-            bus.AddConsumers(Assembly.GetEntryAssembly());
+            x.AddDelayedMessageScheduler();
+            x.AddConsumer<TimerVideoConsumer>(typeof(TimerVideoConsumerDefinition));
+            x.AddConsumer<QueueClientConsumer>(typeof(QueueClientConsumerDefinition));
+            x.AddRequestClient<ConvertVideoEvent>();
 
-            bus.UsingRabbitMq((ctx, cfg) =>
+            x.SetKebabCaseEndpointNameFormatter();
+
+            x.UsingRabbitMq((ctx, cfg) =>
             {
                 cfg.Host(context.Configuration.GetConnectionString("RabbitMq"));
-
-                cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(BusMessages.PublishClientInserted, false));
-                cfg.UseMessageRetry(retry =>
+                cfg.UseDelayedMessageScheduler();
+                //cfg.ConnectReceiveObserver(new ReceiveObserverExtensions());
+                cfg.ServiceInstance(instance =>
                 {
-                    retry.Interval(3, TimeSpan.FromSeconds(5));
+                    instance.ConfigureJobServiceEndpoints();
+                    instance.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("dev", false));
                 });
-                cfg.PrefetchCount = 10;
             });
         });
         collection.AddMassTransitHostedService(true);
