@@ -1,4 +1,7 @@
+using GreenPipes;
 using MassTransit;
+using MassTransit.Definition;
+using Sample.Masstransit.WebApi.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +13,14 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddMassTransit(bus =>
 {
-    bus.UsingRabbitMq((ctx, busConfigurator) =>
+    bus.UsingRabbitMq((ctx, cfg) =>
     {
-        busConfigurator.Host(builder.Configuration.GetConnectionString("RabbitMq"));
+        cfg.Host(builder.Configuration.GetConnectionString("RabbitMq"));
+        cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(BusMessages.PublishClientInserted, false));
+        cfg.UseMessageRetry(retry =>
+        {
+            retry.Interval(3, TimeSpan.FromSeconds(5));
+        });
     });
 });
 builder.Services.AddMassTransitHostedService();
@@ -31,4 +39,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

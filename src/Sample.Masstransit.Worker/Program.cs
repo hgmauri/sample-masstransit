@@ -1,38 +1,34 @@
+using System.Reflection;
 using GreenPipes;
 using MassTransit;
-using Sample.Masstransit.WebApi.Core.Extensions;
-using Sample.Masstransit.Worker.Workers;
-
-var configuration = new ConfigurationBuilder()
-    .AddEnvironmentVariables()
-    .AddCommandLine(args)
-    .AddJsonFile("appsettings.json")
-    .Build();
+using MassTransit.Definition;
+using Sample.Masstransit.WebApi.Core;
 
 var host = Host.CreateDefaultBuilder(args)
-    .ConfigureAppConfiguration(builder =>
-    {
-        builder.Sources.Clear();
-        builder.AddConfiguration(configuration);
-    })
     .ConfigureServices((context, collection) =>
     {
-        collection.AddMassTransitExtension(context.Configuration);
+        collection.AddMassTransit(bus =>
+        {
+            bus.AddConsumers(Assembly.GetEntryAssembly());
+
+            bus.UsingRabbitMq((ctx, cfg) =>
+            {
+                cfg.Host(context.Configuration.GetConnectionString("RabbitMq"));
+
+                cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(BusMessages.PublishClientInserted, false));
+                cfg.UseMessageRetry(retry =>
+                {
+                    retry.Interval(3, TimeSpan.FromSeconds(5));
+                });
+                cfg.PrefetchCount = 10;
+            });
+        });
+        collection.AddMassTransitHostedService(true);
     })
     .Build();
 
-var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
-{
-    cfg.ReceiveEndpoint("queue-teste", e =>
-    {
-        e.PrefetchCount = 10;
-        e.UseMessageRetry(p => p.Interval(3, 100));
-        e.Consumer<WorkerClient>();
-    });
-});
-var source = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-await busControl.StartAsync(source.Token);
+await host.StartAsync();
 
 Console.WriteLine("Waiting for new messages.");
 
-while (true);
+while (true) ;

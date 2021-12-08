@@ -17,10 +17,10 @@ public class ClientController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ClientModel model)
+    public async Task<IActionResult> Post([FromBody] ClientInsertedEvent insertedEvent)
     {
-        await _publisher.Publish<ClientModel>(model);
-        _logger.LogInformation($"Send client: {model.ClientId} - {model.Name}");
+        await _publisher.Publish<ClientInsertedEvent>(insertedEvent);
+        _logger.LogInformation($"Send client: {insertedEvent.ClientId} - {insertedEvent.Name}");
 
         return Ok();
     }
