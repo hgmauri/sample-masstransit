@@ -10,6 +10,7 @@ public static class SerilogExtensions
     {
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Information)
+            .MinimumLevel.Override("MassTransit", LogEventLevel.Debug)
             .Enrich.FromLogContext()
             .Enrich.WithExceptionDetails()
             .Enrich.WithProperty("ApplicationName", $"{applicaitoName}")

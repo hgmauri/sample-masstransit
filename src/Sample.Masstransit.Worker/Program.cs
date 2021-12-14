@@ -22,6 +22,7 @@ var host = Host.CreateDefaultBuilder(args)
             x.AddConsumer<TimerVideoConsumer>(typeof(TimerVideoConsumerDefinition));
             x.AddConsumer<QueueClientInsertedConsumer>(typeof(QueueClientConsumerDefinition));
             x.AddConsumer<QueueClientUpdatedConsumer>(typeof(QueueClientUpdatedConsumerDefinition));
+            x.AddConsumer<QueueSendEmailConsumer>(typeof(QueueSendEmailConsumerDefinition));
             x.AddRequestClient<ConvertVideoEvent>();
 
             x.SetKebabCaseEndpointNameFormatter();
