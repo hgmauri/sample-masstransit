@@ -1,9 +1,19 @@
+using Sample.Masstransit.WebApi.Core;
 using Sample.Masstransit.WebApi.Core.Extensions;
+using Serilog;
+
+SerilogExtensions.AddSerilog("API Sample");
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog(Log.Logger);
+
+var appSettings = new AppSettings();
+builder.Configuration.Bind(appSettings);
+
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddControllers();
+builder.Services.AddOpenTelemetry(appSettings);
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Sample.Masstransit.WebApi", Version = "v1" });
@@ -18,10 +28,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Masstransit.WebApi v1"));
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

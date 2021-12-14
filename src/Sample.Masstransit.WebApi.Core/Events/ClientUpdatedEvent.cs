@@ -1,7 +1,7 @@
 ﻿
 namespace Sample.Masstransit.WebApi.Core.Events;
 
-public class ClientInsertedEvent
+public class ClientUpdatedEvent
 {
     public string? ClientId { get; set; }
     public string? Name { get; set; }

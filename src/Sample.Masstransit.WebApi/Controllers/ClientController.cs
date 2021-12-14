@@ -1,7 +1,6 @@
 using MassTransit;
 using MassTransit.Contracts.JobService;
 using Sample.Masstransit.WebApi.Core.Events;
-using Sample.Masstransit.WebApi.Core.Models;
 
 namespace Sample.Masstransit.WebApi.Controllers;
 
@@ -11,23 +10,29 @@ public class ClientController : ControllerBase
 {
     private readonly IPublishEndpoint _publisher;
     private readonly IMessageScheduler _publisherScheduler;
-    private readonly IRequestClient<ConvertVideoEvent> _client;
     private readonly ILogger<ClientController> _logger;
 
-    public ClientController(ILogger<ClientController> logger, IPublishEndpoint publisher, 
-        IMessageScheduler publisherScheduler, IRequestClient<ConvertVideoEvent> client)
+    public ClientController(ILogger<ClientController> logger, IPublishEndpoint publisher, IMessageScheduler publisherScheduler)
     {
         _logger = logger;
         _publisher = publisher;
         _publisherScheduler = publisherScheduler;
-        _client = client;
     }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ClientInsertedEvent insertedEvent)
     {
         await _publisher.Publish(insertedEvent);
-        _logger.LogInformation($"Send client: {insertedEvent.ClientId} - {insertedEvent.Name}");
+        _logger.LogInformation($"Send client inserted: {insertedEvent.ClientId} - {insertedEvent.Name}");
+
+        return Ok();
+    }
+
+    [HttpPost("update")]
+    public async Task<IActionResult> PostUpdate([FromBody] ClientUpdatedEvent insertedEvent)
+    {
+        await _publisher.Publish(insertedEvent);
+        _logger.LogInformation($"Send client updated: {insertedEvent.ClientId} - {insertedEvent.Name}");
 
         return Ok();
     }
@@ -40,23 +45,5 @@ public class ClientController : ControllerBase
         _logger.LogInformation($"Send client: {insertedEvent.ClientId} - {insertedEvent.Name}");
 
         return Ok();
-    }
-
-    [HttpPost("wait")]
-    public async Task<IActionResult> PostWaitResponse([FromBody] ClientInsertedEvent insertedEvent)
-    {
-        var groupId = NewId.Next().ToString();
-        var path = "test";
-
-        var response = await _client.GetResponse<JobSubmissionAccepted>(new
-        {
-            path,
-            groupId,
-            Index = 0,
-            Count = 1
-        });
-        _logger.LogInformation($"Response client: {response.Message.JobId}");
-
-        return Ok(response.Message.JobId);
     }
 }

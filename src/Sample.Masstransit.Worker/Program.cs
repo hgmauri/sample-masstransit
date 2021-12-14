@@ -1,16 +1,27 @@
 using MassTransit;
 using MassTransit.Definition;
+using Sample.Masstransit.WebApi.Core;
 using Sample.Masstransit.WebApi.Core.Events;
+using Sample.Masstransit.WebApi.Core.Extensions;
 using Sample.Masstransit.Worker.Workers;
+using Serilog;
+
+SerilogExtensions.AddSerilog("Worker Sample");
+
+var appSettings = new AppSettings();
 
 var host = Host.CreateDefaultBuilder(args)
+    .UseSerilog(Log.Logger)
     .ConfigureServices((context, collection) =>
     {
+        context.Configuration.Bind(appSettings);
+        collection.AddOpenTelemetry(appSettings);
         collection.AddMassTransit(x =>
         {
             x.AddDelayedMessageScheduler();
             x.AddConsumer<TimerVideoConsumer>(typeof(TimerVideoConsumerDefinition));
-            x.AddConsumer<QueueClientConsumer>(typeof(QueueClientConsumerDefinition));
+            x.AddConsumer<QueueClientInsertedConsumer>(typeof(QueueClientConsumerDefinition));
+            x.AddConsumer<QueueClientUpdatedConsumer>(typeof(QueueClientUpdatedConsumerDefinition));
             x.AddRequestClient<ConvertVideoEvent>();
 
             x.SetKebabCaseEndpointNameFormatter();
