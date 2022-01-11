@@ -11,8 +11,7 @@ public static class OpenTelemetryExtension
         services.AddOpenTelemetryTracing(telemetry =>
         {
             telemetry.AddMassTransitInstrumentation();
-            var resourceBuilder = ResourceBuilder
-                .CreateDefault()
+            var resourceBuilder = ResourceBuilder.CreateDefault()
                 .AddService(appSettings?.DistributedTracing?.Jaeger?.ServiceName);
 
             telemetry

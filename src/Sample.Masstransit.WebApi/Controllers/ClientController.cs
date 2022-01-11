@@ -1,5 +1,4 @@
 using MassTransit;
-using MassTransit.Contracts.JobService;
 using Sample.Masstransit.WebApi.Core.Events;
 
 namespace Sample.Masstransit.WebApi.Controllers;
@@ -40,7 +39,7 @@ public class ClientController : ControllerBase
     [HttpPost("schedule")]
     public async Task<IActionResult> PostSchedule([FromBody] ClientInsertedEvent insertedEvent)
     {
-        await _publisherScheduler.SchedulePublish(DateTime.UtcNow + TimeSpan.FromSeconds(20), insertedEvent);
+        await _publisherScheduler.SchedulePublish(DateTime.UtcNow + TimeSpan.FromSeconds(10), insertedEvent);
 
         _logger.LogInformation($"Send client: {insertedEvent.ClientId} - {insertedEvent.Name}");
 
