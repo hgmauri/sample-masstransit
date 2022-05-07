@@ -5,6 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["src/Sample.Masstransit.Worker/Sample.Masstransit.Worker.csproj", "src/Sample.Masstransit.Worker/"]
 RUN dotnet restore "src/Sample.Masstransit.Worker/Sample.Masstransit.Worker.csproj"
+
 COPY . .
 WORKDIR "/src/src/Sample.Masstransit.Worker"
 RUN dotnet build "Sample.Masstransit.Worker.csproj" -c Release -o /app/build
