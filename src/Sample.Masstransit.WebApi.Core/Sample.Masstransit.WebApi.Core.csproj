@@ -7,20 +7,20 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.0" />
-		<PackageReference Include="MassTransit.RabbitMQ" Version="7.3.0" />
+		<PackageReference Include="MassTransit" Version="8.0.5" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.5" />
 		<PackageReference Include="OpenTelemetry.Contrib.Instrumentation.MassTransit" Version="1.0.0-beta2" />
-		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
-		<PackageReference Include="Serilog.Exceptions" Version="8.0.0" />
-		<PackageReference Include="Serilog.Extensions.Hosting" Version="4.2.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+		<PackageReference Include="Serilog.Exceptions" Version="8.3.0" />
+		<PackageReference Include="Serilog.Extensions.Hosting" Version="5.0.1" />
+		<PackageReference Include="Serilog.Enrichers.CorrelationId" Version="3.0.1" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
 		<PackageReference Include="Jaeger" Version="1.0.3" />
-		<PackageReference Include="OpenTelemetry" Version="1.2.0-rc1" />
-		<PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.2.0-rc1" />
+		<PackageReference Include="OpenTelemetry" Version="1.3.0" />
+		<PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.3.0" />
 		<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc8" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc8" />
 		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc8" />
-
-
 	</ItemGroup>
 
 </Project>

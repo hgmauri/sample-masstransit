@@ -1,8 +1,5 @@
 using System.Diagnostics;
-using GreenPipes;
 using MassTransit;
-using MassTransit.ConsumeConfigurators;
-using MassTransit.Definition;
 using MassTransit.Metadata;
 using Sample.Masstransit.WebApi.Core.Events;
 

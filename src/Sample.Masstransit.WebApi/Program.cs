@@ -2,33 +2,44 @@ using Sample.Masstransit.WebApi.Core;
 using Sample.Masstransit.WebApi.Core.Extensions;
 using Serilog;
 
-SerilogExtensions.AddSerilog("API Sample");
-
-var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog(Log.Logger);
-
-var appSettings = new AppSettings();
-builder.Configuration.Bind(appSettings);
-
-builder.Services.AddRouting(options => options.LowercaseUrls = true);
-
-builder.Services.AddControllers();
-builder.Services.AddOpenTelemetry(appSettings);
-builder.Services.AddSwaggerGen(c =>
+try
 {
-    c.SwaggerDoc("v1", new() { Title = "Sample.Masstransit.WebApi", Version = "v1" });
-});
+    var builder = WebApplication.CreateBuilder(args);
+    builder.AddSerilog("API MassTransit");
+    Log.Information("Starting API");
 
-builder.Services.AddMassTransitExtension(builder.Configuration);
+    var appSettings = new AppSettings();
+    builder.Configuration.Bind(appSettings);
 
-var app = builder.Build();
+    builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Masstransit.WebApi v1"));
+    builder.Services.AddControllers();
+    builder.Services.AddOpenTelemetry(appSettings);
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", null);
+    });
+
+    builder.Services.AddMassTransitExtension(builder.Configuration);
+
+    var app = builder.Build();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sample.Masstransit.WebApi v1"));
+    }
+
+    app.MapControllers();
+
+    await app.RunAsync();
 }
-
-app.MapControllers();
-
-await app.RunAsync();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.Information("Server Shutting down...");
+    Log.CloseAndFlush();
+}

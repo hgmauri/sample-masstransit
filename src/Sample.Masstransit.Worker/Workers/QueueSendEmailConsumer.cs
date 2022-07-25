@@ -1,7 +1,4 @@
-using GreenPipes;
 using MassTransit;
-using MassTransit.ConsumeConfigurators;
-using MassTransit.Definition;
 using Sample.Masstransit.WebApi.Core.Events;
 
 namespace Sample.Masstransit.Worker.Workers;
