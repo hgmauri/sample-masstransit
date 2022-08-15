@@ -15,6 +15,7 @@ try
 
     builder.Services.AddControllers();
     builder.Services.AddOpenTelemetry(appSettings);
+
     builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", null);
