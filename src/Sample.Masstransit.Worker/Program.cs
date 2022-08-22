@@ -46,7 +46,7 @@ try
             });
         }).Build();
 
-    await host.StartAsync();
+    await host.RunAsync();
 }
 catch (Exception ex)
 {
