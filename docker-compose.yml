@@ -17,3 +17,17 @@ services:
       - "16686:16686"
       - "14268:14268"
       - "9411:9411"
+
+  webapi:
+    image: webapi:latest
+    build:
+      context: .
+      dockerfile: src/Sample.Masstransit.WebApi/Dockerfile
+    ports:
+      - 5053:80
+
+  worker:
+    image: worker:latest
+    build:
+      context: .
+      dockerfile: src/Sample.Masstransit.Worker/Dockerfile
