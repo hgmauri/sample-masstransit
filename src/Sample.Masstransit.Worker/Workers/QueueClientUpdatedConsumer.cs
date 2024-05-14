@@ -12,7 +12,7 @@ public class QueueClientUpdatedConsumer : IConsumer<ClientUpdatedEvent>
         _logger = logger;
     }
 
-    public async Task Consume(ConsumeContext<ClientUpdatedEvent> context)
+    public Task Consume(ConsumeContext<ClientUpdatedEvent> context)
     {
         if (context.Message.Name == "test")
         {
@@ -23,13 +23,14 @@ public class QueueClientUpdatedConsumer : IConsumer<ClientUpdatedEvent>
         var name = context.Message.Name;
 
         _logger.LogInformation($"Receive client: {id} - {name}");
+        return Task.CompletedTask;
     }
 }
 
 public class QueueClientUpdatedConsumerDefinition : ConsumerDefinition<QueueClientUpdatedConsumer>
 {
-    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<QueueClientUpdatedConsumer> consumerConfigurator)
-    {
+    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<QueueClientUpdatedConsumer> consumerConfigurator, IRegistrationContext context)
+	{
         consumerConfigurator.UseMessageRetry(retry => retry.Interval(3, TimeSpan.FromSeconds(3)));
     }
 }

@@ -12,15 +12,16 @@ public class QueueSendEmailConsumer : IConsumer<SendEmailEvent>
         _logger = logger;
     }
 
-    public async Task Consume(ConsumeContext<SendEmailEvent> context)
+    public Task Consume(ConsumeContext<SendEmailEvent> context)
     {
-        _logger.LogInformation($"Email successfully sent: {context.Message.Email}");
+	    _logger.LogInformation($"Email successfully sent: {context.Message.Email}");
+	    return Task.CompletedTask;
     }
 }
 
 public class QueueSendEmailConsumerDefinition : ConsumerDefinition<QueueSendEmailConsumer>
 {
-    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<QueueSendEmailConsumer> consumerConfigurator)
+    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<QueueSendEmailConsumer> consumerConfigurator, IRegistrationContext context)
     {
         consumerConfigurator.UseMessageRetry(retry => retry.Interval(3, TimeSpan.FromSeconds(3)));
     }

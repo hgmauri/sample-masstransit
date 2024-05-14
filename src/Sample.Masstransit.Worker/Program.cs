@@ -36,7 +36,7 @@ try
                 {
                     cfg.Host(context.Configuration.GetConnectionString("RabbitMq"));
                     cfg.UseDelayedMessageScheduler();
-                    //cfg.ConnectReceiveObserver(new ReceiveObserverExtensions());
+                    cfg.ConnectReceiveObserver(new ReceiveObserverExtensions());
                     cfg.ServiceInstance(instance =>
                     {
                         instance.ConfigureJobServiceEndpoints();

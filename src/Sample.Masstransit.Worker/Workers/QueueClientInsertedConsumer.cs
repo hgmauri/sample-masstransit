@@ -38,8 +38,8 @@ public class QueueClientInsertedConsumer : IConsumer<ClientInsertedEvent>
 
 public class QueueClientConsumerDefinition : ConsumerDefinition<QueueClientInsertedConsumer>
 {
-    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<QueueClientInsertedConsumer> consumerConfigurator)
-    {
+    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<QueueClientInsertedConsumer> consumerConfigurator, IRegistrationContext context)
+	{
         consumerConfigurator.UseMessageRetry(retry => retry.Interval(3, TimeSpan.FromSeconds(3)));
     }
 }

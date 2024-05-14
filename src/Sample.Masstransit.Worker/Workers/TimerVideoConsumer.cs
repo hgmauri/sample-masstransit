@@ -13,9 +13,10 @@ public class TimerVideoConsumer : IJobConsumer<ConvertVideoEvent>
 
 public class TimerVideoConsumerDefinition : ConsumerDefinition<TimerVideoConsumer>
 {
-    protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<TimerVideoConsumer> consumerConfigurator)
-    {
-        consumerConfigurator.Options<JobOptions<ConvertVideoEvent>>(options =>
-            options.SetRetry(r => r.Interval(3, TimeSpan.FromSeconds(30))).SetJobTimeout(TimeSpan.FromMinutes(1)).SetConcurrentJobLimit(10));
-    }
+	protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator, IConsumerConfigurator<TimerVideoConsumer> consumerConfigurator, IRegistrationContext context)
+	{
+		consumerConfigurator.Options<JobOptions<ConvertVideoEvent>>(options =>
+			options.SetRetry(r => r.Interval(3, TimeSpan.FromSeconds(30))).SetJobTimeout(TimeSpan.FromMinutes(1)).SetConcurrentJobLimit(10));
+	}
+
 }
