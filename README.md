@@ -1,6 +1,6 @@
 # sample-masstransit
 
-- .NET 8.0
+- .NET 9.0
 - Swashbuckle Swagger
 - Serilog
 - MassTransit
