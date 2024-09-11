@@ -1,4 +1,5 @@
 using MassTransit;
+using Microsoft.AspNetCore.Mvc;
 using Sample.Masstransit.WebApi.Core.Events;
 
 namespace Sample.Masstransit.WebApi.Controllers;

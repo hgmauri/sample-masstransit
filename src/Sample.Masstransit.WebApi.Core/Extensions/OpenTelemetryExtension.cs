@@ -14,7 +14,7 @@ public static class OpenTelemetryExtension
 			var resourceBuilder = ResourceBuilder.CreateDefault()
 				.AddTelemetrySdk()
 				.AddEnvironmentVariableDetector()
-				.AddService(appSettings?.DistributedTracing?.Jaeger?.ServiceName);
+				.AddService(appSettings?.DistributedTracing?.Jaeger?.ServiceName ?? "Service");
 
 			telemetry.AddSource("MassTransit")
 				.AddMassTransitInstrumentation()

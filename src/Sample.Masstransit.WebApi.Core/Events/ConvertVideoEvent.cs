@@ -1,9 +1,9 @@
 ﻿namespace Sample.Masstransit.WebApi.Core.Events;
 
-public interface ConvertVideoEvent
+public class ConvertVideoEvent
 {
-    string GroupId { get; }
-    int Index { get; }
-    int Count { get; }
-    string Path { get; }
+    public string GroupId { get; set; }
+    public int Index { get; set; }
+	public int Count { get; set; }
+	public string Path { get; set; }
 }
