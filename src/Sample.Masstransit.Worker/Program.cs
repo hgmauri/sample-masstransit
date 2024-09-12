@@ -30,7 +30,7 @@ try
                 x.AddConsumer<QueueSendEmailConsumer>(typeof(QueueSendEmailConsumerDefinition));
                 x.AddRequestClient<ConvertVideoEvent>();
 
-                x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("dev", false));
+                x.SetKebabCaseEndpointNameFormatter();
 
                 x.UsingRabbitMq((ctx, cfg) =>
                 {
@@ -40,7 +40,9 @@ try
                     cfg.ServiceInstance(instance =>
                     {
                         instance.ConfigureJobServiceEndpoints();
-                    });
+                        instance.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("dev", false));
+
+					});
                 });
             });
         }).Build();
