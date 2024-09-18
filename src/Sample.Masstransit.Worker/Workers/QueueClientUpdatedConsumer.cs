@@ -5,24 +5,15 @@ namespace Sample.Masstransit.Worker.Workers;
 
 public class QueueClientUpdatedConsumer : IConsumer<ClientUpdatedEvent>
 {
-    private readonly ILogger<QueueClientUpdatedConsumer> _logger;
-
-    public QueueClientUpdatedConsumer(ILogger<QueueClientUpdatedConsumer> logger)
-    {
-        _logger = logger;
-    }
-
     public Task Consume(ConsumeContext<ClientUpdatedEvent> context)
     {
         if (context.Message.Name == "test")
-        {
             throw new ArgumentException("Invalid");
-        }
 
-        var id = context.Message.ClientId;
-        var name = context.Message.Name;
+        var id = context.Message?.ClientId;
+        var name = context.Message?.Name;
 
-        _logger.LogInformation($"Receive client: {id} - {name}");
+        Serilog.Log.Information($"Evento concluído: {nameof(ClientUpdatedEvent)}: {id} - {name}");
         return Task.CompletedTask;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -21,12 +20,9 @@ public static class OpenTelemetryExtension
 				.SetResourceBuilder(resourceBuilder)
 				.AddAspNetCoreInstrumentation()
 				.AddHttpClientInstrumentation()
-				.SetSampler(new AlwaysOnSampler())
-				.AddJaegerExporter(jaegerOptions =>
-				{
-					jaegerOptions.AgentHost = appSettings?.DistributedTracing?.Jaeger?.Host;
-					jaegerOptions.AgentPort = appSettings?.DistributedTracing?.Jaeger?.Port ?? 0;
-				});
+				.SetSampler(new AlwaysOnSampler());
+
+			telemetry.AddOtlpExporter();
 		});
 	}
 }

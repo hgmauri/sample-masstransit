@@ -12,14 +12,15 @@ public static class SerilogExtensions
     public static WebApplicationBuilder AddSerilog(this WebApplicationBuilder builder, string applicationName)
     {
         Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Information)
-            .MinimumLevel.Override("MassTransit", LogEventLevel.Debug)
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+            .MinimumLevel.Override("MassTransit", LogEventLevel.Information)
+            .MinimumLevel.Override("Quartz", LogEventLevel.Information)
+            .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore.StaticFiles"))
             .Enrich.FromLogContext()
             .Enrich.WithCorrelationId()
             .Enrich.WithExceptionDetails()
             .Enrich.WithProperty("ApplicationName", $"{applicationName}")
-            .Filter.ByExcluding(Matching.FromSource("Microsoft.AspNetCore.StaticFiles"))
-            .WriteTo.Async(writeTo => writeTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}"))
+            .WriteTo.Async(writeTo => writeTo.Console())
             .CreateLogger();
 
         builder.Logging.ClearProviders();

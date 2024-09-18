@@ -5,16 +5,9 @@ namespace Sample.Masstransit.Worker.Workers;
 
 public class QueueSendEmailConsumer : IConsumer<SendEmailEvent>
 {
-    private readonly ILogger<QueueSendEmailConsumer> _logger;
-
-    public QueueSendEmailConsumer(ILogger<QueueSendEmailConsumer> logger)
-    {
-        _logger = logger;
-    }
-
     public Task Consume(ConsumeContext<SendEmailEvent> context)
     {
-	    _logger.LogInformation($"Email successfully sent: {context.Message.Email}");
+	    Serilog.Log.Information($"Email enviado com sucesso: {context.Message.Email}");
 	    return Task.CompletedTask;
     }
 }
